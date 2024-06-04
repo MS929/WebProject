@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Main Homepage</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+
+        padding: 0;
+      }
+      .navbar {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .navbar a,
+      .bottom-links a {
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+      }
+      .navbar a:hover,
+      .bottom-links a:hover {
+        background-color: #0056b3;
+      }
+      h1,
+      h2 {
+        text-align: center;
+      }
+      h1 {
+        font-size: 3em;
+        color: #333;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        font-family: "Trebuchet MS", sans-serif;
+      }
+      h2 {
+        color: #555;
+        margin-bottom: 20px;
+      }
+      .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+      }
+      .product {
+        border: 1px solid #ddd;
+        margin: 10px;
+        padding: 10px;
+        width: calc(25% - 20px);
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .product img {
+        max-width: 100%;
+        height: auto;
+      }
+      .bottom-links {
+        padding: 10px;
+        text-align: center;
+      }
+      .bottom-links a {
+        background: linear-gradient(to right, #ff416c, #ff4b2b);
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+      .bottom-links a:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        transform: translateY(-3px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div>Welcome to the Paichai University Used Goods Trading Site!</div>
+      <div>
+        {% if user.is_authenticated %} Welcome, {{ user.username }}! |
+        <a href="{% url 'profile' %}">My Profile</a> |
+        <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+        <a href="{% url 'signup' %}">Sign Up</a> |
+        <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+      </div>
+    </div>
+    <h1>배재 리턴 샵</h1>
+    <div class="bottom-links">
+      <a href="{% url 'product_list' %}">상품 목록</a> |
+      <a href="{% url 'product_create' %}">상품 등록</a>
+    </div>
+    <h2>Product List</h2>
+    <div class="product-list">
+      {% for product in products %}
+      <div class="product">
+        <h3>{{ product.name }}</h3>
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+        {% else %}
+        <p>No image available</p>
+        {% endif %}
+        <p>{{ product.description }}</p>
+        <p>Price: {{ product.price }}원</p>
+        <p>판매자: {{ product.seller }}</p>
+      </div>
+      {% empty %}
+      <p>No products available.</p>
+      {% endfor %}
+    </div>
+  </body>
+</html>

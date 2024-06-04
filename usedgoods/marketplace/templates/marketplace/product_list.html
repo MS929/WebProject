@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>중고 거래 사이트</title>
+    <style>
+      body {
+        background: #add8e6;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+      .back-to-main {
+        display: inline-block;
+        margin: 20px;
+        text-decoration: none;
+        color: white;
+        background-color: #007bff;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 20px;
+      }
+      form {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      input[type="text"],
+      select {
+        width: calc(70% - 12px);
+        padding: 10px;
+        margin-right: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      ul.product-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      ul.product-list li {
+        flex: 0 0 30%;
+        margin: 10px;
+        border: 1px solid #ccc;
+        padding: 20px;
+        box-sizing: border-box;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        overflow: auto;
+      }
+      ul.product-list li:hover {
+        transform: translateY(-5px);
+      }
+      ul.product-list img {
+        width: 100%;
+        height: auto;
+        max-height: 150px;
+        object-fit: contain;
+      }
+      .product-details strong {
+        display: block;
+        margin-bottom: 5px;
+      }
+      a {
+        text-decoration: none;
+        color: #007bff;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="location.href='/'" class="back-to-main">
+      메인 화면으로
+    </button>
+    <h1>상품 목록</h1>
+
+    <!-- 검색 폼 -->
+    <form method="get">
+        <input type="text" name="q" placeholder="검색어를 입력하세요">
+      <select name="category">
+        <option value="">전체 카테고리</option>
+        {% for category in categories %}
+        <option value="{{ category.name }}">{{ category.name }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">검색</button>
+    </form>
+
+    <ul class="product-list">
+      {% for product in products %}
+      <li>
+        <div class="product-details">
+          <strong>상품 이름:</strong> {{ product.title }}
+          <strong>상품 설명:</strong> {{ product.description }}
+          <strong>가격: </strong>{{ product.price }}원<br />
+          <strong>카테고리: </strong>{{ product.category.name }}<br />
+          </div>
+          {% if product.image %}
+          <strong> 상품 이미지 : </strong>
+          <img src="{{ product.image.url }}" alt="상품 이미지" /><br />
+          {% endif %}
+          <a href="{% url 'product_update' product.id %}">수정</a> |
+          <a href="{% url 'product_delete' product.id %}">삭제</a>
+        </div>
+      </li>
+      {% empty %}
+      <li>상품이 없습니다.</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block title %}Profile - My Site{% endblock %}
+{%block content %}
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+/>
+<style>
+  body {
+    background-color: #f7f7f7;
+  }
+  .profile-card {
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    padding: 40px;
+    background-color: white;
+  }
+  .profile-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  .profile-header {
+    color: #007bff;
+    margin-bottom: 30px;
+  }
+  .btn-custom {
+    border-radius: 20px;
+    font-weight: bold;
+  }
+</style>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="profile-card">
+        <div class="profile-header text-center">
+          <h2>프로필</h2>
+        </div>
+        <div class="card-body">
+          <p><strong>사용자 이름:</strong> {{ user.username }}</p>
+          <p><strong>이메일:</strong> {{ user.email }}</p>
+          <p><strong>전화번호:</strong> {{ user.profile.phone_number }}</p>
+          {# Profile 모델 사용 시 #}
+          <!-- <p><strong>전화번호:</strong> {{ user.marketplaceprofile.phone_number }}</p> {# MarketplaceProfile 모델 사용 시 #} -->
+          <p><strong>추가 정보:</strong> {{ profile.some_additional_info }}</p>
+        </div>
+        <div class="card-footer text-center mt-4">
+          <a
+            href="{% url 'update_profile' %}"
+            class="btn btn-warning btn-custom"
+            >프로필 수정</a
+          >
+          <a href="{% url 'logout' %}" class="btn btn-danger btn-custom"
+            >로그아웃</a
+          >
+          <a href="{% url 'home' %}" class="btn btn-secondary btn-custom"
+            >홈으로</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
