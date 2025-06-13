@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/ms/Documents/Visual Studio Code/WebMarket/myvenv/bin/python3" "$0" "$@"
+'''exec' "/Users/ms/Documents/Visual Studio Code/WebMarket/myvenv/bin/python3.13" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re
